@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Form</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        margin: 2rem;
+      }
+
+      h1 {
+        text-align: center;
+        margin-bottom: 1rem;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .form-group {
+        display: flex;
+        align-items: center;
+      }
+
+      label {
+        width: 100px;
+        margin-right: 1rem;
+      }
+
+      input,
+      textarea {
+        padding: 0.5rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        width: 100%;
+      }
+
+      textarea {
+        height: 100px;
+      }
+
+      .error-message {
+        color: red;
+        font-size: 0.8rem;
+        margin-top: 0.5rem;
+        display: none;
+      }
+
+      button {
+        background-color: #4caf50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Contact Us</h1>
+    <form id="contactForm" onsubmit="return validateForm()">
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required />
+        <span class="error-message"></span>
+      </div>
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required />
+        <span class="error-message"></span>
+      </div>
+      <div class="form-group">
+        <label for="message">Message:</label>
+        <textarea id="message" name="message" required></textarea>
+        <span class="error-message"></span>
+      </div>
+      <button type="submit">Submit</button>
+      <button type="feedback">feedback Form</button>
+    </form>
+    <script>
+      function validateForm() {
+        const name = document.getElementById("name").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const message = document.getElementById("message").value.trim();
+        let isValid = true;
+
+        // Clear any previous error messages
+        const errorMessages = document.querySelectorAll(".error-message");
+        errorMessages.forEach((message) => (message.textContent = ""));
+
+        // Name validation
+        if (name === "") {
+          document.getElementById("name").nextElementSibling.textContent =
+            "Name is required";
+          isValid = false;
+        }
+
+        // Email validation
+        const emailRegex = /^[\w-.]+@([\w-.]+\.)+[a-zA-Z]{2,4}$/;
+        if (!emailRegex.test(email)) {
+          document.getElementById("email").nextElementSibling.textContent =
+            "Invalid email format";
+          isValid = false;
+        }
+
+        // Message validation
+        if (message === "") {
+          document.getElementById("message").nextElementSibling.textContent =
+            "Message is required";
+          isValid = false;
+        }
+
+        // Display error messages if validation fails
+        errorMessages.forEach(
+          (message) => (message.style.display = isValid ? "none" : "block")
+        );
+
+        return isValid;
+      }
+    </script>
+  </body>
+</html>
